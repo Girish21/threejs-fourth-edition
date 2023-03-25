@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import Stats from 'three/examples/jsm/libs/stats.module'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 import fragmentShader from './shader/fragment.frag?raw'
@@ -11,6 +12,7 @@ class Sketch {
   private scene: THREE.Scene
   private camera: THREE.PerspectiveCamera
   private clock: THREE.Clock
+  private stats: Stats
   private renderer: THREE.WebGLRenderer
   private controls: OrbitControls
   private geometry: THREE.PlaneGeometry | null
@@ -41,6 +43,8 @@ class Sketch {
     this.camera.position.z = 1
     this.scene.add(this.camera)
 
+    this.stats = Stats()
+    this.domElement.append(this.stats.domElement)
     this.clock = new THREE.Clock()
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
@@ -103,6 +107,7 @@ class Sketch {
     }
 
     this.controls.update()
+    this.stats.update()
 
     this.renderer.render(this.scene, this.camera)
 
